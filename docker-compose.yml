@@ -1,0 +1,34 @@
+services:
+  mongo:
+    container_name: api-crud
+    image: mongo:4.0
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "root"
+      MONGO_INITDB_ROOT_PASSWORD: "root"
+    restart: always
+    networks:
+      - api-crud
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "10"
+  rabbitmq:
+    container_name: api-crud-rabbitmq
+    image: rabbitmq:3.8.3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: "root"
+      RABBITMQ_DEFAULT_PASS: "root"
+    restart: always
+    networks:
+      - api-crud
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "10"
