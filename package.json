@@ -2,7 +2,6 @@
   "name": "api-crud",
   "version": "1.0.0",
   "main": "index.js",
-
   "scripts": {
     "dev": "NODE_ENV=development nodemon src/server.js",
     "test": "NODE_ENV=development jest --watchAll --runInBand --coverage --config 'jest.config.js'"
@@ -22,6 +21,7 @@
   "dependencies": {
     "@sentry/node": "^7.38.0",
     "mongodb": "^3.7.3",
+    "mongoose": "^6.10.0",
     "typeorm": "^0.3.12"
   },
   "devDependencies": {
