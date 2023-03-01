@@ -6,7 +6,7 @@
 - [x] Implement clean architecture
 - [x] Database schema
 - [x] CRUD account
-- [ ] Queue for CUD account
+- [x] Queue for CUD account
 - [ ] Docker file
 ## Local Development
 ```python
