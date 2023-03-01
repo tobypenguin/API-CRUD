@@ -3,6 +3,11 @@ const Schema = mongoose.Schema;
 
 let StudentSchema = new Schema(
   {
+    _id: { 
+      type: mongoose.Types.ObjectId, 
+      auto: true, 
+      autoIndex: true 
+    },
     firstName: {
       type: String,
     },
@@ -21,9 +26,9 @@ let StudentSchema = new Schema(
     birthDate: {
         type: String,
     },
-  },
+  }, 
   { timestamps: true },
-  { collection: "student" }
+  { collection: "student" },
 );
 
 const Account = mongoose.model("student", StudentSchema);
