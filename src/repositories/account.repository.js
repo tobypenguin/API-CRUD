@@ -1,9 +1,11 @@
 const Account = require('../entities/schemas/account.schema');
 const QueueRepository = require('../repositories/queue.repository');
+const RedisRepository = require('../repositories/redis.repository')
 
 class AccountRepository {
   constructor(queueUrl, exchangeName) {
     this.queueRepository = new QueueRepository(queueUrl, exchangeName);
+    this.redisRepository = new RedisRepository();
   }
 
   async create(account) {
@@ -25,8 +27,15 @@ class AccountRepository {
 
   async getById(id) {
     try {
-      const account = await Account.findById(id).lean();
-      return account;
+      const redisKey = `account:${id}`;
+      let account = await this.redisRepository.getByIdRedis(redisKey);
+    if (!account) {
+      account = await Account.findById(id).lean();
+      if (account) {
+        await this.redisRepository.save(redisKey, account);
+      }
+    }
+    return account;
     } catch (err) {
       return ({ error: err.message })
     }
