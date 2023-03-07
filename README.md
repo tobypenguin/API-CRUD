@@ -7,7 +7,7 @@
 - [x] Database schema
 - [x] CRUD account
 - [x] Queue for CUD account
-- [ ] Docker file
+- [x] Docker file
 ## Local Development
 ```python
 # Start required containers
