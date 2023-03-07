@@ -38,6 +38,23 @@ services:
         max-file: "10"
     networks:
       - api-net
+  redis:
+    container_name: api-crud-redis
+    image: redis:5.0.7-alpine
+    ports:
+      - 6379:6379
+    environment:
+      - REDIS_HOST = 127.0.0.1
+      - REDIS_PORT = 6379
+    command: redis-server --requirepass root
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "10"
+    networks:
+      - api-net
   
   crud-api:
     container_name: api-crud
