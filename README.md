@@ -8,8 +8,8 @@
 - [x] CRUD account
 - [x] Queue for CUD account
 - [x] Docker file
-- [x] validate field for create & update
-- [x] redis
+- [x] Validate field for create & update
+- [x] Redis
 ## Local Development
 ```python
 # Start required containers
