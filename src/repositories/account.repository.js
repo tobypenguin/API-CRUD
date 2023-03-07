@@ -1,5 +1,5 @@
 const Account = require('../entities/schemas/account.schema');
-const QueueRepository = require('./queue.repository');
+const QueueRepository = require('../repositories/queue.repository');
 
 class AccountRepository {
   constructor(queueUrl, exchangeName) {
