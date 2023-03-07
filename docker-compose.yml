@@ -1,18 +1,24 @@
+version: '3.1'
 services:
   mongo:
-    container_name: api-crud
+    container_name: api-crud-mongodb
     image: mongo:4.0
     ports:
       - 27017:27017
     environment:
-      MONGO_INITDB_ROOT_USERNAME: "root"
-      MONGO_INITDB_ROOT_PASSWORD: "root"
+      - MONGO_HOST=127.0.0.1
+      - MONGO_PORT=27017
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
     restart: always
     logging:
       driver: "json-file"
       options:
         max-size: "50m"
         max-file: "10"
+    networks:
+      - api-net
+        
   rabbitmq:
     container_name: api-crud-rabbitmq
     image: rabbitmq:3.8.3-management
@@ -20,11 +26,50 @@ services:
       - 5672:5672
       - 15672:15672
     environment:
-      RABBITMQ_DEFAULT_USER: "root"
-      RABBITMQ_DEFAULT_PASS: "root"
+      - RABBITMQ_HOST=127.0.0.1
+      - RABBITMQ_PORT=5672
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=root
     restart: always
     logging:
       driver: "json-file"
       options:
         max-size: "50m"
         max-file: "10"
+    networks:
+      - api-net
+  
+  crud-api:
+    container_name: api-crud
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+      args:
+        ENV: docker
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      - MONGO_HOST=127.0.0.1
+      - MONGO_PORT=27017
+      - RABBITMQ_HOST=127.0.0.1
+      - RABBITMQ_PORT=5672 
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=root
+      - PORT=8080
+    depends_on:
+      - rabbitmq
+      - mongo
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '50m'
+        max-file: '10'
+    networks:
+      - api-net
+
+networks:
+  api-net:
+    driver: bridge
