@@ -8,11 +8,14 @@
 - [x] CRUD account
 - [x] Queue for CUD account
 - [x] Docker file
+- [x] validate field for create & update
+- [x] redis
 ## Local Development
 ```python
 # Start required containers
 # - rabbitmq for queue
 # - api-crud for mongo
+# - redis
 npm i
 npm run dev
 ```
